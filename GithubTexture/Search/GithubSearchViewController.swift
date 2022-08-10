@@ -17,6 +17,7 @@ final class GithubSearchViewController: ASDKViewController<ASTableNode> {
         static let leadingScreensForBatching: CGFloat = 3
     }
 
+    private let errorTextNode = ASTextNode()
     private lazy var activityIndicator: ASDisplayNode = {
         let activityIndicator = ASDisplayNode()
         activityIndicator.setViewBlock {

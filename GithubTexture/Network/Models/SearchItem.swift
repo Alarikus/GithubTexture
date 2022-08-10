@@ -141,7 +141,6 @@ struct SearchItem: Codable, Hashable {
     static func == (lhs: SearchItem, rhs: SearchItem) -> Bool {
         return lhs.id == rhs.id && lhs.nodeID == rhs.nodeID
     }
-
 }
 
 struct License: Codable {

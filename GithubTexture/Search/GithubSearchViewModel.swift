@@ -72,8 +72,8 @@ final class GithubSearchViewModel: NSObject {
         githubRepository
             .search(query: searchText, page: currentPage, itemsCount: Constants.pageItemsCount)
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] completion in
-                switch completion {
+            .sink { [weak self] result in
+                switch result {
                 case let .failure(error):
                     if let urlError = error as? URLError {
                         if urlError.code != URLError(.cancelled).code {

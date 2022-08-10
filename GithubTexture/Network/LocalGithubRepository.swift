@@ -93,34 +93,33 @@ class LocalGithubRepository: GithubRepository, ResultStorage {
     }
 
     func search(query: String, page: Int, itemsCount: Int) -> AnyPublisher<SearchResponse, Error> {
-        let subject = PassthroughSubject<SearchResponse, Error>()
-
-        saveSearchResultQueue.sync {
-            if let savedResponse = savedResponses[query] {
-                subject.send(savedResponse)
-            } else {
-                subject.send(completion: .failure(URLError(.cannotDecodeRawData)))
+        return Future<SearchResponse, Error> { [weak self] promise in
+            guard let self = self else { return }
+            self.saveSearchResultQueue.sync {
+                if let savedResponse = self.savedResponses[query] {
+                    promise(.success(savedResponse))
+                } else {
+                    promise(.failure(URLError(.cannotDecodeRawData)))
+                }
             }
-        }
-
-        return subject.eraseToAnyPublisher()
+        }.eraseToAnyPublisher()
     }
 
     func readme(owner: String, repo: String) -> AnyPublisher<ReadmeResponse, Error> {
-        let url = url(.reposPath, pathComponents: owner, repo, "readme")
-        let subject = PassthroughSubject<ReadmeResponse, Error>()
-        let decoder = JSONDecoder()
-        decoder.dateDecodingStrategy = .iso8601
+        return Future<ReadmeResponse, Error> { [weak self] promise in
+            guard let self = self else { return }
+            let url = self.url(.reposPath, pathComponents: owner, repo, "readme")
+            let decoder = JSONDecoder()
+            decoder.dateDecodingStrategy = .iso8601
 
-        if
-            let savedReadmeString = UserDefaults.standard.value(forKey: url) as? String,
-            let data = savedReadmeString.data(using: .utf8),
-            let savedReadmeResponse = try? decoder.decode(ReadmeResponse.self, from: data) {
-            subject.send(savedReadmeResponse)
-        } else {
-            subject.send(completion: .failure(URLError(.cannotDecodeRawData)))
-        }
-
-        return subject.eraseToAnyPublisher()
+            if
+                let savedReadmeString = UserDefaults.standard.value(forKey: url) as? String,
+                let data = savedReadmeString.data(using: .utf8),
+                let savedReadmeResponse = try? decoder.decode(ReadmeResponse.self, from: data) {
+                promise(.success(savedReadmeResponse))
+            } else {
+                promise(.failure(URLError(.cannotDecodeRawData)))
+            }
+        }.eraseToAnyPublisher()
     }
 }

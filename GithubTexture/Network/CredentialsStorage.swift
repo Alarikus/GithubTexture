@@ -22,12 +22,10 @@ class KeychainCredentialsStorage: CredentialsStorage {
     }
         
     var githubClientId: String {
-        //TODO: - remove before push
         return <#github_client_id#>
     }
     
     var githubClientSecret: String {
-        //TODO: - remove before push
         return <#github_client_secret#>
     }
     

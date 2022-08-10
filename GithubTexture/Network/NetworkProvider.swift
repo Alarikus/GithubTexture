@@ -90,9 +90,7 @@ class RemoteNetworkProvider: NetworkProvider {
         let subject = PassthroughSubject<T, Error>()
 
         if cancelPreviousTask {
-            if currentTask != nil {
-                currentTask?.cancel()
-            }
+            currentTask?.cancel()
         }
 
         var urlComponents = URLComponents(string: url)
