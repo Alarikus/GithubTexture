@@ -1,0 +1,52 @@
+opt_in_rules:
+  - closure_spacing
+  - overridden_super_call
+  - operator_usage_whitespace
+  - redundant_nil_coalescing
+  - prohibited_super_call
+  - explicit_init
+  - object_literal
+  - explicit_self
+  - vertical_whitespace_closing_braces
+  - unused_optional_binding
+  - vertical_whitespace
+  - sorted_imports
+  - colon
+  - todo
+  - file_length
+disabled_rules:
+  - trailing_whitespace
+  - file_length
+  - force_try
+  - force_cast
+  - type_body_length
+  - identifier_name
+  - type_name
+  - function_parameter_count
+  - nesting
+  - multiple_closures_with_trailing_closure
+  - empty_parentheses_with_trailing_closure
+excluded:
+  - Carthage
+  - Pods
+  - R.generated.swift
+  - Frameworks
+
+line_length:
+  warning: 150
+  error: 200
+  ignores_urls: true
+  ignores_comments: true
+  ignores_function_declarations: true
+
+function_body_length:
+  warning: 320
+  error: 420
+
+large_tuple:
+  warning: 5
+  error: 5
+
+cyclomatic_complexity:
+  warning: 20
+  error: 40
