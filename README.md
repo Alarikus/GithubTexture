@@ -1,4 +1,4 @@
-# GithubText Test
+# GithubTexture
 
 
 ## Installation
